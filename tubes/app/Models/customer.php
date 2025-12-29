@@ -6,11 +6,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use PHPStan\Reflection\SignatureMap\FunctionSignature;
 
 class Customer extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
+
+    protected $table = 'customer';
+    protected $primaryKey = 'id_customer';
 
     /**
      * The attributes that are mass assignable.
@@ -18,10 +22,11 @@ class Customer extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'nama',
         'email',
         'password',
         'no_hp',
+        'alamat'
     ];
 
     /**
@@ -33,6 +38,12 @@ class Customer extends Authenticatable
         'password',
         'remember_token',
     ];
+
+
+    public function ulasan()
+    {
+        return $this->hasMany(ulasan::class, 'id_customer', 'id_customer');
+    }
 
     /**
      * Get the attributes that should be cast.
